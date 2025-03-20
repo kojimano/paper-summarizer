@@ -39,7 +39,7 @@ clean:
 
 # Create a virtual environment
 venv:
-	python -m venv venv
+	python3 -m venv venv
 	@echo "Virtual environment created. Activate with 'source venv/bin/activate'"
 
 # Install development dependencies

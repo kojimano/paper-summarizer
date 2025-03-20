@@ -35,7 +35,9 @@ This guide will walk you through the process of setting up a Slack app for the P
 2. Click "Create New Command"
 3. Fill in the following details:
    - Command: `/summary`
-   - Request URL: `https://your-app-domain.com/slack/commands/summary` (replace with your actual domain)
+   - Request URL: `https://your-public-domain.com/slack/commands/summary`
+     - Note: This must be a publicly accessible URL where your app is hosted
+     - For development, you can use a service like ngrok (e.g., `https://your-ngrok-id.ngrok.io/slack/commands/summary`)
    - Short Description: "Summarize an academic paper"
    - Usage Hint: "[paper link]"
 4. Click "Save"
@@ -44,7 +46,9 @@ This guide will walk you through the process of setting up a Slack app for the P
 
 1. Navigate to "Event Subscriptions" in the sidebar
 2. Toggle "Enable Events" to On
-3. Set the Request URL to `https://your-app-domain.com/slack/events` (replace with your actual domain)
+3. Set the Request URL to `https://your-public-domain.com/slack/events`
+   - Note: This must be the same domain as your slash command URL
+   - For development: `https://your-ngrok-id.ngrok.io/slack/events`
 4. Under "Subscribe to bot events", add the following events:
    - `message.channels` (to receive channel messages)
    - `message.groups` (to receive private channel messages)
@@ -53,6 +57,28 @@ This guide will walk you through the process of setting up a Slack app for the P
 5. Click "Save Changes"
 
 ## 3. Deploy Your App
+
+### Local Development with ngrok
+
+For local development and testing, you can use [ngrok](https://ngrok.com/) to create a secure tunnel to your local machine:
+
+1. Install ngrok: https://ngrok.com/download
+2. Start your application locally:
+   ```
+   python src/app.py
+   ```
+3. In a separate terminal, start ngrok to create a tunnel to your local port:
+   ```
+   ngrok http 3000
+   ```
+4. Ngrok will provide a public URL (e.g., `https://a1b2c3d4.ngrok.io`)
+5. Update your Slack app's Request URLs to use this ngrok URL:
+   - Slash Command Request URL: `https://a1b2c3d4.ngrok.io/slack/commands/summary`
+   - Event Subscriptions Request URL: `https://a1b2c3d4.ngrok.io/slack/events`
+
+Note: The ngrok URL changes each time you restart ngrok unless you have a paid plan. You'll need to update your Slack app's Request URLs whenever the ngrok URL changes.
+
+### Production Deployment
 
 1. Set up your server or hosting platform
 2. Create a `.env` file with the following variables:

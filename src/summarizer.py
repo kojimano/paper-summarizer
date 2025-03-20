@@ -3,7 +3,7 @@ Summarizer module for generating paper summaries using GPT-3o.
 """
 
 import logging
-import openai
+from openai import OpenAI
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +18,7 @@ class Summarizer:
             api_key (str): OpenAI API key
         """
         self.api_key = api_key
-        openai.api_key = api_key
+        self.client = OpenAI(api_key=api_key)
         
         # System prompt template for the first pass
         self.first_pass_prompt = """
@@ -116,7 +116,7 @@ Summary generated using the methodology from "How to read a paper" by S. Keshav.
             str: First pass summary
         """
         try:
-            response = openai.chat.completions.create(
+            response = self.client.chat.completions.create(
                 model="gpt-3.5-turbo",  # Replace with "gpt-3o" when available
                 messages=[
                     {"role": "system", "content": self.first_pass_prompt},
@@ -149,7 +149,7 @@ Summary generated using the methodology from "How to read a paper" by S. Keshav.
             
             second_pass_message = f"{user_message}\n\nAdditional paper content for analysis:\n{truncated_text}"
             
-            response = openai.chat.completions.create(
+            response = self.client.chat.completions.create(
                 model="gpt-3.5-turbo",  # Replace with "gpt-3o" when available
                 messages=[
                     {"role": "system", "content": self.second_pass_prompt},
