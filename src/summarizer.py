@@ -117,13 +117,11 @@ Summary generated using the methodology from "How to read a paper" by S. Keshav.
         """
         try:
             response = self.client.chat.completions.create(
-                model="gpt-3.5-turbo",  # Replace with "gpt-3o" when available
+                model="o3-mini",  # Replace with "gpt-3o" when available
                 messages=[
                     {"role": "system", "content": self.first_pass_prompt},
                     {"role": "user", "content": user_message}
                 ],
-                temperature=0.3,
-                max_tokens=1000
             )
             
             return response.choices[0].message.content.strip()
@@ -150,7 +148,7 @@ Summary generated using the methodology from "How to read a paper" by S. Keshav.
             second_pass_message = f"{user_message}\n\nAdditional paper content for analysis:\n{truncated_text}"
             
             response = self.client.chat.completions.create(
-                model="gpt-3.5-turbo",  # Replace with "gpt-3o" when available
+                model="o3-mini",  # Replace with "gpt-3o" when available
                 messages=[
                     {"role": "system", "content": self.second_pass_prompt},
                     {"role": "user", "content": second_pass_message}

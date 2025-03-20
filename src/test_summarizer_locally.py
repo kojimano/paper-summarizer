@@ -50,7 +50,7 @@ def main():
         # Generate summary
         logger.info("Generating summary...")
         summary = summarizer.generate_summary(paper_content)
-        
+
         # Print summary
         print("\n" + "="*80)
         print(summary)
