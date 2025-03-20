@@ -89,7 +89,7 @@ Note: The ngrok URL changes each time you restart ngrok unless you have a paid p
    PORT=3000
    ```
 3. Install dependencies: `pip install -r requirements.txt`
-4. Run the app: `python src/app.py`
+4. Run the app: `gi`
 
 ## 4. Test Your App
 
